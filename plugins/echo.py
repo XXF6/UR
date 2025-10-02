@@ -28,6 +28,9 @@ from pyrogram.types import Thumbnail
 
 @Client.on_message(filters.private & filters.regex(pattern=".*http.*"))
 async def echo(bot, update):
+    
+    if not await is_admin_check(bot, update):
+        return
     if Config.LOG_CHANNEL:
         try:
             log_message = await update.forward(Config.LOG_CHANNEL)
