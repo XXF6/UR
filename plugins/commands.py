@@ -19,7 +19,9 @@ from plugins.database.add import add_user_to_database
 from plugins.functions.forcesub import handle_force_subscribe
 
 @Client.on_message(filters.command(["start"]) & filters.private)
-async def start(bot, update):
+async def start(bot, update): 
+    if not await is_admin_check(bot, update):
+        return
     if not update.from_user:
         return await update.reply_text("I don't know about you sar :(")
     await add_user_to_database(bot, update)
