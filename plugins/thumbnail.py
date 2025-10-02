@@ -32,9 +32,11 @@ from plugins.database.database import db
 from plugins.config import Config
 from plugins.database.add import add_user_to_database
 from plugins.settings.settings import *
-
+from plugins.functions.admin_check import is_admin_check
 @Client.on_message(filters.photo)
 async def save_photo(bot, update):
+    if not await is_admin_check(bot, update):
+        return  
     if not update.from_user:
         return await update.reply_text("I don't know about you sar :(")
     await add_user_to_database(bot, update)
@@ -59,6 +61,8 @@ async def save_photo(bot, update):
     await db.set_thumbnail(update.from_user.id, thumbnail=update.photo.file_id)
 
 @Client.on_message(filters.command(["delthumb"]))
+    if not await is_admin_check(bot, update):
+        return
 async def delete_thumbnail(bot, update):
     if not update.from_user:
         return await update.reply_text("I don't know about you sar :(")
@@ -86,6 +90,9 @@ async def delete_thumbnail(bot, update):
 
 @Client.on_message(filters.command("showthumb") )
 async def viewthumbnail(bot, update):
+  
+    if not await is_admin_check(bot, update):
+        return
     if not update.from_user:
         return await update.reply_text("I don't know about you sar :(")
     await add_user_to_database(bot, update) 
