@@ -50,6 +50,10 @@ class Config(object):
     UPDATES_CHANNEL = os.environ.get("UPDATES_CHANNEL", "")
     
     OWNER_ID = int(os.environ.get("OWNER_ID", ""))
+
+     # معرف المالك الحالي
+    ADMIN_IDS = [int(x) for x in os.environ.get("ADMIN_IDS", f"{OWNER_ID}").split()] # قائمة بمعرفات الأدمنز
+
     
     TG_MIN_FILE_SIZE = 2097152000
     
